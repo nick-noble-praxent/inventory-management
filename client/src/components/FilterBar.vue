@@ -243,4 +243,37 @@ export default {
     padding: 0.35rem 0.5rem;
   }
 }
+
+/* Dark mode overrides — inherit CSS variables from :root overrides */
+:global([data-theme="dark"]) .filters-bar {
+  background: var(--color-filter-bar);
+  border-bottom-color: var(--color-border);
+}
+
+:global([data-theme="dark"]) .filter-group label {
+  color: var(--color-text-muted);
+}
+
+:global([data-theme="dark"]) .filter-select {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+  color-scheme: dark;
+}
+
+:global([data-theme="dark"]) .filter-select:hover {
+  border-color: var(--color-border-medium);
+}
+
+:global([data-theme="dark"]) .reset-filters-btn {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+:global([data-theme="dark"]) .reset-filters-btn:hover:not(:disabled) {
+  background: var(--color-nav-hover-bg);
+  border-color: var(--color-border-medium);
+  color: var(--color-text-primary);
+}
 </style>

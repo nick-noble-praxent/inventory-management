@@ -2,10 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime import datetime, timedelta
 from mock_data import inventory_items, orders, demand_forecasts, backlog_items, spending_summary, monthly_spending, category_spending, recent_transactions, purchase_orders
-
-restocking_orders = []  # runtime only; resets on server restart
 
 app = FastAPI(title="Factory Inventory Management System")
 
@@ -123,27 +120,6 @@ class CreatePurchaseOrderRequest(BaseModel):
     expected_delivery_date: str
     notes: Optional[str] = None
 
-class RestockingOrderItem(BaseModel):
-    sku: str
-    name: str
-    quantity: int
-    unit_cost: float
-    line_total: float
-
-class CreateRestockingOrderRequest(BaseModel):
-    budget: float
-    items: List[RestockingOrderItem]
-
-class RestockingOrder(BaseModel):
-    id: str
-    order_number: str
-    order_date: str
-    expected_delivery: str
-    budget: float
-    total_cost: float
-    items: List[RestockingOrderItem]
-    status: str
-
 # API endpoints
 @app.get("/")
 def root():
@@ -252,14 +228,31 @@ def get_recent_transactions():
     return recent_transactions
 
 @app.get("/api/reports/quarterly")
-def get_quarterly_reports():
+def get_quarterly_reports(
+    warehouse: Optional[str] = None,
+    category: Optional[str] = None,
+    status: Optional[str] = None,
+    month: Optional[str] = None
+):
     """Get quarterly performance reports"""
-    # Calculate quarterly statistics from orders
-    quarters = {}
+    filtered_orders = orders
 
-    for order in orders:
+    if warehouse and warehouse != 'all':
+        filtered_orders = [o for o in filtered_orders if o.get('warehouse') == warehouse]
+    if category and category != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if any(item.get('category', '').lower() == category.lower()
+                                 for item in o.get('items', []))]
+    if status and status != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if o.get('status', '').lower() == status.lower()]
+    if month and month != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if o.get('order_date', '').startswith(month)]
+
+    quarters = {}
+    for order in filtered_orders:
         order_date = order.get('order_date', '')
-        # Determine quarter
         if '2025-01' in order_date or '2025-02' in order_date or '2025-03' in order_date:
             quarter = 'Q1-2025'
         elif '2025-04' in order_date or '2025-05' in order_date or '2025-06' in order_date:
@@ -285,7 +278,6 @@ def get_quarterly_reports():
         if order.get('status') == 'Delivered':
             quarters[quarter]['delivered_orders'] += 1
 
-    # Calculate averages and fulfillment rate
     result = []
     for q, data in quarters.items():
         if data['total_orders'] > 0:
@@ -293,63 +285,55 @@ def get_quarterly_reports():
             data['fulfillment_rate'] = round((data['delivered_orders'] / data['total_orders']) * 100, 1)
         result.append(data)
 
-    # Sort by quarter
     result.sort(key=lambda x: x['quarter'])
     return result
 
 @app.get("/api/reports/monthly-trends")
-def get_monthly_trends():
+def get_monthly_trends(
+    warehouse: Optional[str] = None,
+    category: Optional[str] = None,
+    status: Optional[str] = None,
+    month: Optional[str] = None
+):
     """Get month-over-month trends"""
-    months = {}
+    filtered_orders = orders
 
-    for order in orders:
+    if warehouse and warehouse != 'all':
+        filtered_orders = [o for o in filtered_orders if o.get('warehouse') == warehouse]
+    if category and category != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if any(item.get('category', '').lower() == category.lower()
+                                 for item in o.get('items', []))]
+    if status and status != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if o.get('status', '').lower() == status.lower()]
+    if month and month != 'all':
+        filtered_orders = [o for o in filtered_orders
+                          if o.get('order_date', '').startswith(month)]
+
+    months = {}
+    for order in filtered_orders:
         order_date = order.get('order_date', '')
         if not order_date:
             continue
 
-        # Extract month (format: YYYY-MM-DD)
-        month = order_date[:7]  # Gets YYYY-MM
-
-        if month not in months:
-            months[month] = {
-                'month': month,
+        month_key = order_date[:7]  # YYYY-MM
+        if month_key not in months:
+            months[month_key] = {
+                'month': month_key,
                 'order_count': 0,
                 'revenue': 0,
                 'delivered_count': 0
             }
 
-        months[month]['order_count'] += 1
-        months[month]['revenue'] += order.get('total_value', 0)
+        months[month_key]['order_count'] += 1
+        months[month_key]['revenue'] += order.get('total_value', 0)
         if order.get('status') == 'Delivered':
-            months[month]['delivered_count'] += 1
+            months[month_key]['delivered_count'] += 1
 
-    # Convert to list and sort
     result = list(months.values())
     result.sort(key=lambda x: x['month'])
     return result
-
-@app.get("/api/restocking-orders", response_model=List[RestockingOrder])
-def get_restocking_orders():
-    """Get all submitted restocking orders"""
-    return restocking_orders
-
-@app.post("/api/restocking-orders", response_model=RestockingOrder, status_code=201)
-def create_restocking_order(request: CreateRestockingOrderRequest):
-    """Create a new restocking order"""
-    now = datetime.utcnow()
-    order_number = f"RES-{now.strftime('%Y')}-{len(restocking_orders) + 1:04d}"
-    order = {
-        "id": str(len(restocking_orders) + 1),
-        "order_number": order_number,
-        "order_date": now.strftime("%Y-%m-%dT%H:%M:%S"),
-        "expected_delivery": (now + timedelta(days=7)).strftime("%Y-%m-%dT%H:%M:%S"),
-        "budget": request.budget,
-        "total_cost": sum(item.line_total for item in request.items),
-        "items": [item.model_dump() for item in request.items],
-        "status": "Submitted"
-    }
-    restocking_orders.append(order)
-    return order
 
 if __name__ == "__main__":
     import uvicorn

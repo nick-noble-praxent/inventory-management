@@ -3,41 +3,81 @@
     <header class="top-nav">
       <div class="nav-container">
         <div class="logo">
-          <h1>{{ t('nav.companyName') }}</h1>
-          <span class="subtitle">{{ t('nav.subtitle') }}</span>
+          <h1>{{ t("nav.companyName") }}</h1>
+          <span class="subtitle">{{ t("nav.subtitle") }}</span>
         </div>
         <nav class="nav-tabs">
           <router-link to="/" :class="{ active: $route.path === '/' }">
-            {{ t('nav.overview') }}
+            {{ t("nav.overview") }}
           </router-link>
-          <router-link to="/inventory" :class="{ active: $route.path === '/inventory' }">
-            {{ t('nav.inventory') }}
+          <router-link
+            to="/inventory"
+            :class="{ active: $route.path === '/inventory' }"
+          >
+            {{ t("nav.inventory") }}
           </router-link>
-          <router-link to="/orders" :class="{ active: $route.path === '/orders' }">
-            {{ t('nav.orders') }}
+          <router-link
+            to="/orders"
+            :class="{ active: $route.path === '/orders' }"
+          >
+            {{ t("nav.orders") }}
           </router-link>
-          <router-link to="/spending" :class="{ active: $route.path === '/spending' }">
-            {{ t('nav.finance') }}
+          <router-link
+            to="/spending"
+            :class="{ active: $route.path === '/spending' }"
+          >
+            {{ t("nav.finance") }}
           </router-link>
-          <router-link to="/demand" :class="{ active: $route.path === '/demand' }">
-            {{ t('nav.demandForecast') }}
+          <router-link
+            to="/demand"
+            :class="{ active: $route.path === '/demand' }"
+          >
+            {{ t("nav.demandForecast") }}
           </router-link>
-          <router-link to="/reports" :class="{ active: $route.path === '/reports' }">
+          <router-link
+            to="/reports"
+            :class="{ active: $route.path === '/reports' }"
+          >
             Reports
           </router-link>
-          <router-link to="/restocking" :class="{ active: $route.path === '/restocking' }">
-            {{ t('nav.restocking') }}
+          <router-link
+            to="/restocking"
+            :class="{ active: $route.path === '/restocking' }"
+          >
+            {{ t("nav.restocking") }}
           </router-link>
         </nav>
         <LanguageSwitcher />
-        <button class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-          <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+        <button
+          class="theme-toggle"
+          @click="toggleTheme"
+          :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <svg
+            v-if="isDark"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"
+            />
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          <svg
+            v-else
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            />
           </svg>
-          <span>{{ isDark ? 'Light' : 'Dark' }}</span>
+          <span>{{ isDark ? "Light" : "Dark" }}</span>
         </button>
         <ProfileMenu
           @show-profile-details="showProfileDetails = true"
@@ -67,100 +107,103 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
-import { api } from './api'
-import { useAuth } from './composables/useAuth'
-import { useI18n } from './composables/useI18n'
-import { useTheme } from './composables/useTheme'
-import FilterBar from './components/FilterBar.vue'
-import ProfileMenu from './components/ProfileMenu.vue'
-import ProfileDetailsModal from './components/ProfileDetailsModal.vue'
-import TasksModal from './components/TasksModal.vue'
-import LanguageSwitcher from './components/LanguageSwitcher.vue'
+import { ref, onMounted, computed } from "vue";
+import { api } from "./api";
+import { useAuth } from "./composables/useAuth";
+import { useI18n } from "./composables/useI18n";
+import { useTheme } from "./composables/useTheme";
+import FilterBar from "./components/FilterBar.vue";
+import ProfileMenu from "./components/ProfileMenu.vue";
+import ProfileDetailsModal from "./components/ProfileDetailsModal.vue";
+import TasksModal from "./components/TasksModal.vue";
+import LanguageSwitcher from "./components/LanguageSwitcher.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     FilterBar,
     ProfileMenu,
     ProfileDetailsModal,
     TasksModal,
-    LanguageSwitcher
+    LanguageSwitcher,
   },
   setup() {
-    const { currentUser } = useAuth()
-    const { t } = useI18n()
-    const { isDark, toggleTheme } = useTheme()
-    const showProfileDetails = ref(false)
-    const showTasks = ref(false)
-    const apiTasks = ref([])
+    const { currentUser } = useAuth();
+    const { t } = useI18n();
+    const { isDark, toggleTheme } = useTheme();
+    const showProfileDetails = ref(false);
+    const showTasks = ref(false);
+    const apiTasks = ref([]);
 
     // Merge mock tasks from currentUser with API tasks
     const tasks = computed(() => {
-      return [...currentUser.value.tasks, ...apiTasks.value]
-    })
+      return [...currentUser.value.tasks, ...apiTasks.value];
+    });
 
     const loadTasks = async () => {
       try {
-        apiTasks.value = await api.getTasks()
+        apiTasks.value = await api.getTasks();
       } catch (err) {
-        console.error('Failed to load tasks:', err)
+        console.error("Failed to load tasks:", err);
       }
-    }
+    };
 
     const addTask = async (taskData) => {
       try {
-        const newTask = await api.createTask(taskData)
+        const newTask = await api.createTask(taskData);
         // Add new task to the beginning of the array
-        apiTasks.value.unshift(newTask)
+        apiTasks.value.unshift(newTask);
       } catch (err) {
-        console.error('Failed to add task:', err)
+        console.error("Failed to add task:", err);
       }
-    }
+    };
 
     const deleteTask = async (taskId) => {
       try {
         // Check if it's a mock task (from currentUser)
-        const isMockTask = currentUser.value.tasks.some(t => t.id === taskId)
+        const isMockTask = currentUser.value.tasks.some((t) => t.id === taskId);
 
         if (isMockTask) {
           // Remove from mock tasks
-          const index = currentUser.value.tasks.findIndex(t => t.id === taskId)
+          const index = currentUser.value.tasks.findIndex(
+            (t) => t.id === taskId,
+          );
           if (index !== -1) {
-            currentUser.value.tasks.splice(index, 1)
+            currentUser.value.tasks.splice(index, 1);
           }
         } else {
           // Remove from API tasks
-          await api.deleteTask(taskId)
-          apiTasks.value = apiTasks.value.filter(t => t.id !== taskId)
+          await api.deleteTask(taskId);
+          apiTasks.value = apiTasks.value.filter((t) => t.id !== taskId);
         }
       } catch (err) {
-        console.error('Failed to delete task:', err)
+        console.error("Failed to delete task:", err);
       }
-    }
+    };
 
     const toggleTask = async (taskId) => {
       try {
         // Check if it's a mock task (from currentUser)
-        const mockTask = currentUser.value.tasks.find(t => t.id === taskId)
+        const mockTask = currentUser.value.tasks.find((t) => t.id === taskId);
 
         if (mockTask) {
           // Toggle mock task status
-          mockTask.status = mockTask.status === 'pending' ? 'completed' : 'pending'
+          mockTask.status =
+            mockTask.status === "pending" ? "completed" : "pending";
         } else {
           // Toggle API task
-          const updatedTask = await api.toggleTask(taskId)
-          const index = apiTasks.value.findIndex(t => t.id === taskId)
+          const updatedTask = await api.toggleTask(taskId);
+          const index = apiTasks.value.findIndex((t) => t.id === taskId);
           if (index !== -1) {
-            apiTasks.value[index] = updatedTask
+            apiTasks.value[index] = updatedTask;
           }
         }
       } catch (err) {
-        console.error('Failed to toggle task:', err)
+        console.error("Failed to toggle task:", err);
       }
-    }
+    };
 
-    onMounted(loadTasks)
+    onMounted(loadTasks);
 
     return {
       t,
@@ -171,10 +214,10 @@ export default {
       tasks,
       addTask,
       deleteTask,
-      toggleTask
-    }
-  }
-}
+      toggleTask,
+    };
+  },
+};
 </script>
 
 <style>
@@ -250,12 +293,23 @@ export default {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
   background: var(--color-bg);
   color: var(--color-text-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .app {
@@ -274,7 +328,9 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .nav-container {
@@ -343,7 +399,7 @@ body {
 }
 
 .nav-tabs a.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -454,10 +510,18 @@ body {
 }
 
 /* Status colors kept vivid in both themes */
-.stat-card.warning .stat-value { color: #ea580c; }
-.stat-card.success .stat-value { color: #059669; }
-.stat-card.danger  .stat-value { color: #dc2626; }
-.stat-card.info    .stat-value { color: #2563eb; }
+.stat-card.warning .stat-value {
+  color: #ea580c;
+}
+.stat-card.success .stat-value {
+  color: #059669;
+}
+.stat-card.danger .stat-value {
+  color: #dc2626;
+}
+.stat-card.info .stat-value {
+  color: #2563eb;
+}
 
 /* ============================================================
    Generic card
@@ -468,7 +532,9 @@ body {
   padding: 1.25rem;
   border: 1px solid var(--color-border);
   margin-bottom: 1.25rem;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .card-header {
@@ -543,28 +609,88 @@ tbody tr:hover {
   letter-spacing: 0.025em;
 }
 
-.badge.success    { background: #d1fae5; color: #065f46; }
-.badge.warning    { background: #fed7aa; color: #92400e; }
-.badge.danger     { background: #fecaca; color: #991b1b; }
-.badge.info       { background: #dbeafe; color: #1e40af; }
-.badge.increasing { background: #d1fae5; color: #065f46; }
-.badge.decreasing { background: #fecaca; color: #991b1b; }
-.badge.stable     { background: #e0e7ff; color: #3730a3; }
-.badge.high       { background: #fecaca; color: #991b1b; }
-.badge.medium     { background: #fed7aa; color: #92400e; }
-.badge.low        { background: #dbeafe; color: #1e40af; }
+.badge.success {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badge.warning {
+  background: #fed7aa;
+  color: #92400e;
+}
+.badge.danger {
+  background: #fecaca;
+  color: #991b1b;
+}
+.badge.info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.badge.increasing {
+  background: #d1fae5;
+  color: #065f46;
+}
+.badge.decreasing {
+  background: #fecaca;
+  color: #991b1b;
+}
+.badge.stable {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+.badge.high {
+  background: #fecaca;
+  color: #991b1b;
+}
+.badge.medium {
+  background: #fed7aa;
+  color: #92400e;
+}
+.badge.low {
+  background: #dbeafe;
+  color: #1e40af;
+}
 
 /* Slightly desaturate badge backgrounds in dark mode for better contrast */
-[data-theme="dark"] .badge.success    { background: #064e3b; color: #6ee7b7; }
-[data-theme="dark"] .badge.warning    { background: #78350f; color: #fcd34d; }
-[data-theme="dark"] .badge.danger     { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .badge.info       { background: #1e3a8a; color: #93c5fd; }
-[data-theme="dark"] .badge.increasing { background: #064e3b; color: #6ee7b7; }
-[data-theme="dark"] .badge.decreasing { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .badge.stable     { background: #312e81; color: #c4b5fd; }
-[data-theme="dark"] .badge.high       { background: #7f1d1d; color: #fca5a5; }
-[data-theme="dark"] .badge.medium     { background: #78350f; color: #fcd34d; }
-[data-theme="dark"] .badge.low        { background: #1e3a8a; color: #93c5fd; }
+[data-theme="dark"] .badge.success {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+[data-theme="dark"] .badge.warning {
+  background: #78350f;
+  color: #fcd34d;
+}
+[data-theme="dark"] .badge.danger {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+[data-theme="dark"] .badge.info {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
+[data-theme="dark"] .badge.increasing {
+  background: #064e3b;
+  color: #6ee7b7;
+}
+[data-theme="dark"] .badge.decreasing {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+[data-theme="dark"] .badge.stable {
+  background: #312e81;
+  color: #c4b5fd;
+}
+[data-theme="dark"] .badge.high {
+  background: #7f1d1d;
+  color: #fca5a5;
+}
+[data-theme="dark"] .badge.medium {
+  background: #78350f;
+  color: #fcd34d;
+}
+[data-theme="dark"] .badge.low {
+  background: #1e3a8a;
+  color: #93c5fd;
+}
 
 /* ============================================================
    Loading / Error states
@@ -584,6 +710,44 @@ tbody tr:hover {
   border-radius: 8px;
   margin: 1rem 0;
   font-size: 0.938rem;
+}
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 768px) {
+  .nav-container {
+    height: auto;
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .subtitle {
+    display: none;
+  }
+
+  .nav-container > .nav-tabs {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+
+  .nav-container > .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tabs a {
+    white-space: nowrap;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
 }
 
 [data-theme="dark"] .error {
